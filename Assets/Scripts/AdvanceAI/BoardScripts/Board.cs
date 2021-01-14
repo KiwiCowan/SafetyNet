@@ -108,6 +108,7 @@ public class Board : MonoBehaviour
             Node currentNode = graph.FindNodeByCoord(key);
             if (currentNode != null)
             {
+
                 ConnectNeighbours(currentNode);
             }
         }
@@ -133,17 +134,36 @@ public class Board : MonoBehaviour
 
     private void ConnectNeighbours(Node node)
     {
-        foreach (Coord neighbour in coordNeighbours)
+        
+        for (int r = 0; r < rows; r++)
         {
-            int row = node.Coord.row + neighbour.row;
-            int col = node.Coord.col + neighbour.col;
+            for (int c = 0; c < columns; c++)
+            {
+                Node neighbourNode = graph.FindNodeByCoord(new Coord(r, c));
 
-            Node neighbourNode = graph.FindNodeByCoord(new Coord(row, col));
-            if (neighbourNode == null)
-                continue;
+                if (neighbourNode == null)
+                    continue;
 
-            node.AddNeighbour(neighbourNode);
+                if ( neighbourNode != node && neighbourNode.TileType == TileType.EMPTY)
+                {                   
+                    node.AddNeighbour(neighbourNode);
+                }
+            }
         }
+
+        ////return null;
+
+        //foreach (Coord neighbour in coordNeighbours)
+        //{
+        //    int row = node.Coord.row + neighbour.row;
+        //    int col = node.Coord.col + neighbour.col;
+
+        //    Node neighbourNode = graph.FindNodeByCoord(new Coord(row, col));
+        //    if (neighbourNode == null)
+        //        continue;
+
+        //    node.AddNeighbour(neighbourNode);
+        //}
     }
 
     public void BuildDefaultBoard()

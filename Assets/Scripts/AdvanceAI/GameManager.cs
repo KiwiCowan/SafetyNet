@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI currentStateText, currentPlayerText;
     public Button endTurn;
     public bool playerChoose = false;
+    public bool AgentThink = false;
 
     void Awake()
     {        
@@ -64,7 +65,11 @@ public class GameManager : MonoBehaviour
             case GameState.AGENTTURN:
                 {
                     currentPlayerText.text = "AI";
-                    AgentTurn();
+                    if(!AgentThink)
+                    {
+                        AgentTurn();
+                    }
+                    
                     break;
                 }
             case GameState.ENDGAME:
@@ -104,8 +109,8 @@ public class GameManager : MonoBehaviour
     {
         board.BuildDefaultBoard();
 
-        boardGraph = board.GetBoardGraph();
-        Debug.Log(Graph.ToString(boardGraph));
+        //boardStateGraph = board.GetBoardGraph();
+        //Debug.Log(Graph.ToString(boardStateGraph));
 
         foreach (Tile tileGo in BoardGo.GetComponentsInChildren<Tile>())
         {
@@ -132,6 +137,14 @@ public class GameManager : MonoBehaviour
     void AgentTurn()
     {
         playerChoose = false;
+        AgentThink = true;
+        agentAI.AgentTurn();        
+    }
+
+    public bool IsGameOver()
+    {
+
+        return false;
     }
 }
 

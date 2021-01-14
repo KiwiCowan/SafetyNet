@@ -554,6 +554,7 @@ MonoBehaviour:
   PlayerGo: {fileID: 1923125941}
   AgentGo: {fileID: 833036054}
   currentState: 0
+  currentTiles: []
   currentStateText: {fileID: 1459062058}
   currentPlayerText: {fileID: 1506492310}
   endTurn: {fileID: 1076237544}

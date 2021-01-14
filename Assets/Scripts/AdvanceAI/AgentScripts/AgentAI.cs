@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AgentAI : MonoBehaviour
 {
-    
+    public Board board;
+
     public string solution = "";
     public int epochs = 50;
 
@@ -16,9 +17,8 @@ public class AgentAI : MonoBehaviour
 
     int solutionIndex = 0;
     float startY;
-
-    Board board;
-    Graph boardGraph;
+        
+    Graph boardStateGraph;
 
     //Dictionary<GameState, int> states = new Dictionary<GameState, int>() {
     //    { GameState.NONE, 0 },
@@ -43,23 +43,24 @@ public class AgentAI : MonoBehaviour
         { TileType.END, 10 },
     };
 
-    public AgentAI(Board _board)
-    {
-        this.board = _board;
-    }
-
     // Start is called before the first frame update
     void Start()
     {
         startY = transform.position.y;
     }
 
+    public void AgentTurn()
+    {
+        boardStateGraph = board.GetBoardGraph();
+        Debug.Log(Graph.ToString(boardStateGraph));
+    }
+
     public void FindPath()
     {
-        boardGraph = board.GetBoardGraph();
-        Debug.Log(Graph.ToString(boardGraph));
+        boardStateGraph = board.GetBoardGraph();
+        Debug.Log(Graph.ToString(boardStateGraph));
 
-        QLearning qLearning = new QLearning(epochs, actions, rewards, boardGraph, learningRate, discountFactor);
+        QLearning qLearning = new QLearning(epochs, actions, rewards, boardStateGraph, learningRate, discountFactor);
         qLearning.Train();
 
         solution = qLearning.GetPath();
@@ -129,3 +130,5 @@ public class AgentAI : MonoBehaviour
         CheckNextMove();
     }
 }
+
+
