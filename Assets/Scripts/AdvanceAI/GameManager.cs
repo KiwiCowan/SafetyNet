@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
 
         board = BoardGo.GetComponent<Board>();
         agentAI = AgentGo.GetComponent<AgentAI>();
-        rules = new Rules();
+        rules = new Rules(board);
     }
 
     // Start is called before the first frame update

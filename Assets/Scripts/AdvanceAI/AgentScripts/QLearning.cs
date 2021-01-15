@@ -177,7 +177,10 @@ public class QLearning
 
     RewardState GetReward(Node state)
     {
-
+        //check if row full
+        //check if col full
+        //check if diagoulog full
+        //state.
         return RewardState.NONE;
     }
 

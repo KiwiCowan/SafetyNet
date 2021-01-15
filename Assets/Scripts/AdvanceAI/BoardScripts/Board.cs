@@ -5,12 +5,12 @@ using UnityEngine;
 public class Board : MonoBehaviour
 {
     [Range(3, 10)]
-    public int rows = 5;
+    public int rows = 3;
     [Range(3, 10)]
-    public int columns = 5;
+    public int columns = 3;
 
     public GameObject tileTemplate;
-    private Tile[,] tiles = new Tile[0, 0];
+    public Tile[,] tiles = new Tile[0, 0];
 
     public Transform playerStart;
     public Transform start;         //AI start 
@@ -22,12 +22,17 @@ public class Board : MonoBehaviour
 
     public int[,] defaultBoard = new int[,]
     {
+        // 3x3 board
+        { 0, 0, 0 },
+        { 0, 0, 0 },
+        { 0, 0, 0 }
+
         // 5x5 board
-        { 0, 0, 1, 0, 0 },
-        { 0, 0, 0, 0, 0 },
-        { 5, 0, 0, 0, 0 },
-        { 0, 0, 0, 0, 0 },
-        { 0, 0, 2, 0, 0 }
+        //{ 0, 0, 1, 0, 0 },
+        //{ 0, 0, 0, 0, 0 },
+        //{ 5, 0, 0, 0, 0 },
+        //{ 0, 0, 0, 0, 0 },
+        //{ 0, 0, 2, 0, 0 }
         
 
         // test maze 6x6

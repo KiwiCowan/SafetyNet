@@ -515,8 +515,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da398377637fe2a49b8cf3535eb10742, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rows: 5
-  columns: 5
+  rows: 3
+  columns: 3
   tileTemplate: {fileID: 815645932}
   playerStart: {fileID: 0}
   start: {fileID: 0}
@@ -559,6 +559,7 @@ MonoBehaviour:
   currentPlayerText: {fileID: 1506492310}
   endTurn: {fileID: 1076237544}
   playerChoose: 0
+  AgentThink: 0
 --- !u!4 &754531575
 Transform:
   m_ObjectHideFlags: 0
