@@ -59,12 +59,13 @@ public class AgentAI : MonoBehaviour
 
         boardStateGraph = board.GetBoardGraph();
         Debug.Log(Graph.ToString(boardStateGraph));
+
         rules.GetRewards();
         this.actions = rules.actions;
         this.rewards = rules.rewardTiles;
-
+        
         QLearning qLearning = new QLearning(epochs, actions, rewards, boardStateGraph, learningRate, discountFactor);
-        //qLearning.Train();
+       // qLearning.Train();
 
     }
 

@@ -84,7 +84,7 @@ public class Board : MonoBehaviour
 
         if (startCoord == null)
             return null;
-               
+
         //create start node and initialize graph
         Node startNode = new Node(tiles[startCoord.row, startCoord.col], startCoord);
         graph = new Graph(startNode);
@@ -98,8 +98,8 @@ public class Board : MonoBehaviour
             for (int c = 0; c < columns; c++)
             {
                 Tile tile = tiles[r, c];
-                //TileType tileType = tiles[r, c].type;
-                if (tile != startNode.Tile/*tileType != TileType.ASTART*/ /*&& tileType != TileType.PSTART*/)
+                TileType tileType = tiles[r, c].type;
+                if (tile != startNode.Tile /*tileType != TileType.ASTART && tileType != TileType.PSTART*/)
                 {
                     Coord nodeCoord = new Coord(r, c);
                     graph.AddNode(tile, nodeCoord);
@@ -128,7 +128,7 @@ public class Board : MonoBehaviour
         {
             for (int c = 0; c < columns; c++)
             {
-                if (tiles[r, c].type == TileType.ASTART)
+                if (tiles[r, c].type == TileType.EMPTY)
                 {
                     return new Coord(r, c);
                 }

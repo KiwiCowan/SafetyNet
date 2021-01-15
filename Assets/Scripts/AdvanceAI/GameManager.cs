@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
         InitializeBoard();
 
         // Spawn units
-        PlaceUnits();
+        //PlaceUnits();
 
         rules.SetBoard(currentTiles);
 

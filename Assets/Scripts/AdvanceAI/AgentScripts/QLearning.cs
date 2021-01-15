@@ -36,7 +36,7 @@ public class QLearning
         this.epochs = epochs;
 
         qMatrix = new float[states.Nodes.Count, actions.Count];
-        currentState = states.StartNode;
+        currentState = states.GetNodeByIndex(0);
     }
 
     public void Train()
@@ -47,7 +47,7 @@ public class QLearning
 
         for (int i = 0; i < epochs; i++)    //Step 2
         {
-            currentState = states.StartNode;
+            currentState = states.GetNodeByIndex(0);
             bool isEndState = false;
 
             while (!isEndState)
@@ -93,7 +93,7 @@ public class QLearning
     {
         string path = "";
 
-        Node state = states.StartNode;
+        Node state = states.GetNodeByIndex(0);
         int stateIndex = states.GetNodeIndex(state);
         bool isEnd = false;
 

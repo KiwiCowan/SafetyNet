@@ -7,7 +7,7 @@ public class Graph
 {
     public Dictionary<string, Node> Nodes { get; private set; } = new Dictionary<string, Node>();
     Dictionary<string, int> indices = new Dictionary<string, int>();
-    public Node StartNode { get; private set; }
+    public Node StartNode { get; set; }
 
     int count = 0;
 
