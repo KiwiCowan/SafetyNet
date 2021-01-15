@@ -16,13 +16,13 @@ public class QLearning
     float discountFactor;
     int epochs = 100;
 
-    Dictionary<RewardState, float> rewards;
+    Dictionary<Tile, float> rewards;
 
     public QLearning 
         (
         int epochs,
         Dictionary<Coord, int> actions,
-        Dictionary<RewardState, float> rewards,
+        Dictionary<Tile, float> rewards,
         Graph states,
         float learningRate = 0.1f,
         float discountFactor = 0.5f
@@ -68,14 +68,15 @@ public class QLearning
 
                 float oldQ = GetQuality(currentState, nextState);
 
-                RewardState nextStateReward = GetReward(nextState);
+                Tile nextStateReward = GetReward(nextState);
                 float newQ = ((1 - learningRate) * oldQ) + (learningRate * (rewards[nextStateReward] + (discountFactor * maxQ)));
 
                 SetQuality(currentState, nextState, newQ);
                 currentState = nextState;
                 //LogQMatrix(i);
 
-                if (nextStateReward != RewardState.NONE)
+                // if reachs a endState
+                if (nextStateReward. != RewardState.NONE)
                 {
                     isEndState = true;
                 }
@@ -119,7 +120,7 @@ public class QLearning
             state = newState;
 
             Debug.Log(path);
-            RewardState nextStateReward = GetReward(state);
+            Tile nextStateReward = GetReward(state);
             if (nextStateReward != RewardState.NONE)
             {
                 isEnd = true;
@@ -175,13 +176,13 @@ public class QLearning
         qMatrix[stateIndex, actionIndex] = value;
     }
 
-    RewardState GetReward(Node state)
+    Tile GetReward(Node state)
     {
-        //check if row full
-        //check if col full
-        //check if diagoulog full
-        //state.
-        return RewardState.NONE;
+        Tile rewardTile = new Tile();
+
+        rewardTile = state.Tile;
+
+        return rewardTile;
     }
 
     Coord GetAction(Node state, Node toState)

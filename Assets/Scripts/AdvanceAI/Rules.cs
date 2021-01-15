@@ -49,7 +49,9 @@ public class Rules
     public void GetRewards()
     {
         bool isAgent = true;
-        
+
+        rewardTiles.Clear();
+
         if (IsLastMove(boardList))   // Checks if its the last move
         {
             foreach (Tile tile in boardList)

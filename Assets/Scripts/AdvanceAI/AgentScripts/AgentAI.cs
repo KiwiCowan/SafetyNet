@@ -23,7 +23,7 @@ public class AgentAI : MonoBehaviour
 
     public Dictionary<Coord, int> actions = new Dictionary<Coord, int>() { };
 
-    public Dictionary<RewardState, float> rewards = new Dictionary<RewardState, float>() { };
+    public Dictionary<Tile, float> rewards = new Dictionary<Tile, float>() { };
     //Dictionary<GameState, int> states = new Dictionary<GameState, int>() {
     //    { GameState.NONE, 0 },
     //    { GameState.P_WON, 1 },
@@ -59,9 +59,9 @@ public class AgentAI : MonoBehaviour
 
         boardStateGraph = board.GetBoardGraph();
         Debug.Log(Graph.ToString(boardStateGraph));
-
+        rules.GetRewards();
         this.actions = rules.actions;
-        this.rewards = rules.rewards;
+        this.rewards = rules.rewardTiles;
 
         QLearning qLearning = new QLearning(epochs, actions, rewards, boardStateGraph, learningRate, discountFactor);
         //qLearning.Train();
