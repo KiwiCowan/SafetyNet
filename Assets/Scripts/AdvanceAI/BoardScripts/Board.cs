@@ -185,7 +185,7 @@ public class Board : MonoBehaviour
                 tileGameObject.transform.parent = transform;
                 tileGameObject.transform.position = new Vector3(-columns / 2.0f + c + 0.5f, 0, -rows / 2.0f + r + 0.5f);
                 tileGameObject.SetActive(true);
-                tileGameObject.name = ("Tile_" + r + "_" + c);
+                tileGameObject.name = ("Tile_" + r + "_" + c + "_" + (TileType)defaultBoard[r, c]);
                 tileGameObject.transform.GetChild(defaultBoard[r, c]).gameObject.SetActive(true);
                 //tileGameObject.GetComponentInChildren
 

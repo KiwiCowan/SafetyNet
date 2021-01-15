@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject AgentGo;
 
     public GameState currentState;
+    Rules rules;
     Graph boardGraph;
     Board board;
     AgentAI agentAI;
@@ -31,7 +32,7 @@ public class GameManager : MonoBehaviour
 
         board = BoardGo.GetComponent<Board>();
         agentAI = AgentGo.GetComponent<AgentAI>();
-      
+        rules = new Rules();
     }
 
     // Start is called before the first frame update
@@ -57,7 +58,7 @@ public class GameManager : MonoBehaviour
                    
                     if(playerChoose)
                     {
-                        currentState = GameState.AGENTTURN;
+                        ChangeTurn();
                     }
 
                     break;
@@ -102,6 +103,8 @@ public class GameManager : MonoBehaviour
         // Spawn units
         PlaceUnits();
 
+        rules.SetBoard(currentTiles);
+
         currentState = GameState.PLAYERTURN;
     }
 
@@ -112,9 +115,9 @@ public class GameManager : MonoBehaviour
         //boardStateGraph = board.GetBoardGraph();
         //Debug.Log(Graph.ToString(boardStateGraph));
 
-        foreach (Tile tileGo in BoardGo.GetComponentsInChildren<Tile>())
+        foreach (Tile tile in BoardGo.GetComponentsInChildren<Tile>())
         {
-            currentTiles.Add(tileGo);
+            currentTiles.Add(tile);
         }
     }
 
@@ -138,7 +141,21 @@ public class GameManager : MonoBehaviour
     {
         playerChoose = false;
         AgentThink = true;
-        agentAI.AgentTurn();        
+        agentAI.AgentTurn(rules);        
+    }
+
+    public void ChangeTurn()
+    {
+        rules.UpdateActions(currentTiles);
+
+        if (currentState == GameState.PLAYERTURN)
+        {
+            currentState = GameState.AGENTTURN;
+        }
+        else if (currentState == GameState.AGENTTURN)
+        {
+            currentState = GameState.PLAYERTURN;
+        }
     }
 
     public bool IsGameOver()
@@ -146,6 +163,7 @@ public class GameManager : MonoBehaviour
 
         return false;
     }
+
 }
 
 public enum GameState

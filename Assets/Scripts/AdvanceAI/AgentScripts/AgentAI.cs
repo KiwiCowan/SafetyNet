@@ -19,7 +19,11 @@ public class AgentAI : MonoBehaviour
     float startY;
         
     Graph boardStateGraph;
+    Rules rules;
 
+    public Dictionary<Coord, int> actions = new Dictionary<Coord, int>() { };
+
+    public Dictionary<RewardState, float> rewards = new Dictionary<RewardState, float>() { };
     //Dictionary<GameState, int> states = new Dictionary<GameState, int>() {
     //    { GameState.NONE, 0 },
     //    { GameState.P_WON, 1 },
@@ -27,21 +31,21 @@ public class AgentAI : MonoBehaviour
     //    { GameState.DRAW, 3 }
     //};
 
-    Dictionary<char, int> actions = new Dictionary<char, int>() {
-        {'U', 0},
-        {'L', 1},
-        {'D', 2},
-        {'R', 3}
-    };
+    //Dictionary<char, int> actions = new Dictionary<char, int>() {
+    //    {'U', 0},
+    //    {'L', 1},
+    //    {'D', 2},
+    //    {'R', 3}
+    //};
 
-    Dictionary<TileType, float> rewards = new Dictionary<TileType, float>() {
-        { TileType.EMPTY, 1f },
-        { TileType.PSTART, -5f },
-        { TileType.ASTART, 0f },
-        { TileType.PLAYER, -2f },
-        { TileType.AGENT, -3f },
-        { TileType.END, 10 },
-    };
+    //Dictionary<TileType, float> rewards = new Dictionary<TileType, float>() {
+    //    { TileType.EMPTY, 1f },
+    //    { TileType.PSTART, -5f },
+    //    { TileType.ASTART, 0f },
+    //    { TileType.PLAYER, -2f },
+    //    { TileType.AGENT, -3f },
+    //    { TileType.END, 10 },
+    //};
 
     // Start is called before the first frame update
     void Start()
@@ -49,10 +53,19 @@ public class AgentAI : MonoBehaviour
         startY = transform.position.y;
     }
 
-    public void AgentTurn()
+    public void AgentTurn(Rules _rules)
     {
+        rules = _rules;
+
         boardStateGraph = board.GetBoardGraph();
         Debug.Log(Graph.ToString(boardStateGraph));
+
+        this.actions = rules.actions;
+        this.rewards = rules.rewards;
+
+        QLearning qLearning = new QLearning(epochs, actions, rewards, boardStateGraph, learningRate, discountFactor);
+        //qLearning.Train();
+
     }
 
     public void FindPath()

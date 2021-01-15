@@ -7,7 +7,7 @@ public class QLearning
 {
     const float EPSILON = 0.000001f;
 
-    Dictionary<char, int> actions;
+    Dictionary<Coord, int> actions;
     Graph states;
     Node currentState;
 
@@ -16,13 +16,13 @@ public class QLearning
     float discountFactor;
     int epochs = 100;
 
-    Dictionary<TileType, float> rewards;
+    Dictionary<RewardState, float> rewards;
 
     public QLearning 
         (
         int epochs,
-        Dictionary<char, int> actions,
-        Dictionary<TileType, float> rewards,
+        Dictionary<Coord, int> actions,
+        Dictionary<RewardState, float> rewards,
         Graph states,
         float learningRate = 0.1f,
         float discountFactor = 0.5f
@@ -105,7 +105,7 @@ public class QLearning
                 }
             }
 
-            char action = actions.FirstOrDefault(x => x.Value == actionIndex).Key;
+            Coord action = actions.FirstOrDefault(x => x.Value == actionIndex).Key;
             path += action;
 
             Node newState = GetStateFromAction(state, action);
@@ -124,7 +124,7 @@ public class QLearning
         string s = "Epoch " + epoch + " - Q Matrix: \n +---------------------------------+ \n";
         s += string.Format("{0, 8}", "");
 
-        foreach (KeyValuePair<char, int> pair in actions)
+        foreach (KeyValuePair<Coord, int> pair in actions)
         {
             s += string.Format("{0, 15}", pair.Key);
         }
@@ -164,53 +164,57 @@ public class QLearning
         qMatrix[stateIndex, actionIndex] = value;
     }
 
-    char GetAction(Node fromState, Node toState)
+    Coord GetAction(Node state, Node toState)
     {
-        Coord direction = new Coord(
-            toState.Coord.row - fromState.Coord.row,
-            toState.Coord.col - fromState.Coord.col
-        );
+        Coord tileCoord = toState.Coord;
+        return tileCoord;
 
-        if (direction.row == 1 && direction.col == 0)
-        {
-            return 'U';
-        }
-        if (direction.row == -1 && direction.col == 0)
-        {
-            return 'D';
-        }
-        if (direction.row == 0 && direction.col == 1)
-        {
-            return 'R';
-        }
+        //Coord direction = new Coord(
+        //    toState.Coord.row - fromState.Coord.row,
+        //    toState.Coord.col - fromState.Coord.col
+        //);
 
-        return 'L';
+        //if (direction.row == 1 && direction.col == 0)
+        //{
+        //    return 'U';
+        //}
+        //if (direction.row == -1 && direction.col == 0)
+        //{
+        //    return 'D';
+        //}
+        //if (direction.row == 0 && direction.col == 1)
+        //{
+        //    return 'R';
+        //}
+
+        //return 'L';
     }
 
-    Node GetStateFromAction(Node state, char action)
+    Node GetStateFromAction(Node state, Coord action)
     {
-        Coord dir = ActionToDirection(action);
-        foreach (Node neighbour in state.Neighbours)
-        {
-            int r = neighbour.Coord.row - state.Coord.row;
-            int c = neighbour.Coord.col - state.Coord.col;
 
-            if (dir.col == c && dir.row == r)
-            {
-                return neighbour;
-            }
-        }
-        return null;
+        //Coord dir = ActionToDirection(action);
+        //foreach (Node neighbour in state.Neighbours)
+        //{
+        //    int r = neighbour.Coord.row - state.Coord.row;
+        //    int c = neighbour.Coord.col - state.Coord.col;
+
+        //    if (dir.col == c && dir.row == r)
+        //    {
+        //        return neighbour;
+        //    }
+        //}
+        //return null;
     }
 
-    Coord ActionToDirection(char action)
-    {
-        switch (action)
-        {
-            case 'U': return new Coord(1, 0);
-            case 'R': return new Coord(0, 1);
-            case 'D': return new Coord(-1, 0);
-            default: return new Coord(0, -1);
-        }
-    }
+    //Coord ActionToDirection(char action)
+    //{
+    //    switch (action)
+    //    {
+    //        case 'U': return new Coord(1, 0);
+    //        case 'R': return new Coord(0, 1);
+    //        case 'D': return new Coord(-1, 0);
+    //        default: return new Coord(0, -1);
+    //    }
+    //}
 }

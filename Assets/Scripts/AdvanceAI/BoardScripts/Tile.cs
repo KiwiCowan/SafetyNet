@@ -105,6 +105,13 @@ public class Tile : MonoBehaviour
         {
             OnEndSet(this);
         }
+
+        UpdateTiles();
+    }
+
+    void UpdateTiles()
+    {
+        this.name = ("Tile_" + row + "_" + col + "_" + type);
     }
 }
 
