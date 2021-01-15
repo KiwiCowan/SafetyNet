@@ -16,13 +16,13 @@ public class QLearning
     float discountFactor;
     int epochs = 100;
 
-    Dictionary<Tile, float> rewards;
+    Dictionary<Tile, RewardState> rewards;
 
     public QLearning 
         (
         int epochs,
         Dictionary<Coord, int> actions,
-        Dictionary<Tile, float> rewards,
+        Dictionary<Tile, RewardState> rewards,
         Graph states,
         float learningRate = 0.1f,
         float discountFactor = 0.5f
@@ -69,14 +69,14 @@ public class QLearning
                 float oldQ = GetQuality(currentState, nextState);
 
                 Tile nextStateReward = GetReward(nextState);
-                float newQ = ((1 - learningRate) * oldQ) + (learningRate * (rewards[nextStateReward] + (discountFactor * maxQ)));
+                float newQ = ((1 - learningRate) * oldQ) + (learningRate * ((float)rewards[nextStateReward] + (discountFactor * maxQ)));
 
                 SetQuality(currentState, nextState, newQ);
                 currentState = nextState;
                 //LogQMatrix(i);
 
                 // if reachs a endState
-                if (nextStateReward. != RewardState.NONE)
+                if (rewards[currentState.Tile] != RewardState.NONE)
                 {
                     isEndState = true;
                 }
@@ -121,7 +121,7 @@ public class QLearning
 
             Debug.Log(path);
             Tile nextStateReward = GetReward(state);
-            if (nextStateReward != RewardState.NONE)
+            if (rewards[currentState.Tile] != RewardState.NONE)
             {
                 isEnd = true;
             }

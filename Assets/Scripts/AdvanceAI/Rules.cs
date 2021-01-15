@@ -10,7 +10,7 @@ public class Rules
     Board board;
     public Dictionary<Coord, int> actions = new Dictionary<Coord, int>() { };
 
-    public Dictionary<Tile, float> rewardTiles = new Dictionary<Tile, float>() { };
+    public Dictionary<Tile, RewardState> rewardTiles = new Dictionary<Tile, RewardState>() { };
 
     public Dictionary<RewardState, float> rewards = new Dictionary<RewardState, float>() {
         { RewardState.NONE, 0f },
@@ -63,11 +63,11 @@ public class Rules
                         // Check for Agent Win
                         if (IsRowFull(tile, TileType.AGENT) || IsColFull(tile, TileType.AGENT) || IsDiaFull(tile, TileType.AGENT))
                         {
-                            rewardTiles.Add(tile, (float)RewardState.WIN);
+                            rewardTiles.Add(tile, RewardState.WIN);
                         }
                         else    // if no win, it can only be a Draw
                         {
-                            rewardTiles.Add(tile, (float)RewardState.DRAW);
+                            rewardTiles.Add(tile, RewardState.DRAW);
                         }
                     }
                     else    // if its the Player's turn last
@@ -75,11 +75,11 @@ public class Rules
                         // Check for Player Win / Agent Loss
                         if (IsRowFull(tile, TileType.PLAYER) || IsColFull(tile, TileType.PLAYER) || IsDiaFull(tile, TileType.PLAYER))
                         {
-                            rewardTiles.Add(tile, (float)RewardState.LOSS);
+                            rewardTiles.Add(tile, RewardState.LOSS);
                         }
                         else
                         {
-                            rewardTiles.Add(tile, (float)RewardState.DRAW);
+                            rewardTiles.Add(tile, RewardState.DRAW);
                         }
                     }                   
                 }
@@ -96,11 +96,11 @@ public class Rules
                         // Check for Agent Win
                         if (IsRowFull(tile, TileType.AGENT) || IsColFull(tile, TileType.AGENT) || IsDiaFull(tile, TileType.AGENT))
                         {
-                            rewardTiles.Add(tile, (float)RewardState.WIN);
+                            rewardTiles.Add(tile, RewardState.WIN);
                         }
                         else    // if no win, it can only be a None
                         {
-                            rewardTiles.Add(tile, (float)RewardState.NONE);
+                            rewardTiles.Add(tile, RewardState.NONE);
                         }
                     }
                     else    // if its the Player's turn
@@ -108,11 +108,11 @@ public class Rules
                         // Check for Player Win / Agent Loss
                         if (IsRowFull(tile, TileType.PLAYER) || IsColFull(tile, TileType.PLAYER) || IsDiaFull(tile, TileType.PLAYER))
                         {
-                            rewardTiles.Add(tile, (float)RewardState.LOSS);
+                            rewardTiles.Add(tile, RewardState.LOSS);
                         }
                         else
                         {
-                            rewardTiles.Add(tile, (float)RewardState.NONE);
+                            rewardTiles.Add(tile, RewardState.NONE);
                         }
                     }
                 }

@@ -23,7 +23,7 @@ public class AgentAI : MonoBehaviour
 
     public Dictionary<Coord, int> actions = new Dictionary<Coord, int>() { };
 
-    public Dictionary<Tile, float> rewards = new Dictionary<Tile, float>() { };
+    public Dictionary<Tile, RewardState> rewards = new Dictionary<Tile, RewardState>() { };
     //Dictionary<GameState, int> states = new Dictionary<GameState, int>() {
     //    { GameState.NONE, 0 },
     //    { GameState.P_WON, 1 },
