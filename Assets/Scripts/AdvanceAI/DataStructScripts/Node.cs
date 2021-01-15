@@ -5,13 +5,16 @@ using UnityEngine;
 public class Node
 {
     public List<Node> Neighbours { get; private set; } = new List<Node>();
-    public TileType TileType { get; private set; }
+    //public TileType TileType { get; private set; }
     public Coord Coord { get; private set; }
 
-    public Node(TileType tileType, Coord coord)
+    public Tile Tile { get; private set; }
+
+    public Node(/*TileType tileType*/Tile tile, Coord coord)
     {
-        TileType = tileType;
+        //TileType = tileType;
         Coord = coord;
+        Tile = tile;
     }
 
     public void AddNeighbour(Node node)

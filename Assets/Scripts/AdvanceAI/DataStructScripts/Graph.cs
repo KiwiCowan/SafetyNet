@@ -19,9 +19,9 @@ public class Graph
         AddIndex(key);
     }
 
-    public void AddNode(TileType tileType, Coord coord)
+    public void AddNode(Tile tile, Coord coord)
     {
-        Node newNode = new Node(tileType, coord);
+        Node newNode = new Node(tile, coord);
         string key = Coord.ToString(newNode.Coord);
         Nodes.Add(key, newNode);
         AddIndex(key);

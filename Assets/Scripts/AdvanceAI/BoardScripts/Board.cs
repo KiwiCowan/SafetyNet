@@ -79,9 +79,9 @@ public class Board : MonoBehaviour
 
         if (startCoord == null)
             return null;
-
+               
         //create start node and initialize graph
-        Node startNode = new Node(TileType.ASTART, startCoord);
+        Node startNode = new Node(tiles[startCoord.row, startCoord.col], startCoord);
         graph = new Graph(startNode);
 
         List<Coord> keys = new List<Coord>();
@@ -92,11 +92,12 @@ public class Board : MonoBehaviour
         {
             for (int c = 0; c < columns; c++)
             {
-                TileType tileType = tiles[r, c].type;
-                if (tileType != TileType.ASTART /*&& tileType != TileType.PSTART*/)
+                Tile tile = tiles[r, c];
+                //TileType tileType = tiles[r, c].type;
+                if (tile != startNode.Tile/*tileType != TileType.ASTART*/ /*&& tileType != TileType.PSTART*/)
                 {
                     Coord nodeCoord = new Coord(r, c);
-                    graph.AddNode(tileType, nodeCoord);
+                    graph.AddNode(tile, nodeCoord);
                     keys.Add(nodeCoord);
                 }
             }
@@ -144,7 +145,7 @@ public class Board : MonoBehaviour
                 if (neighbourNode == null)
                     continue;
 
-                if ( neighbourNode != node && neighbourNode.TileType == TileType.EMPTY)
+                if ( neighbourNode != node && neighbourNode.Tile.type == TileType.EMPTY)
                 {                   
                     node.AddNeighbour(neighbourNode);
                 }

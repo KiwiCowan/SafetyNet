@@ -67,16 +67,22 @@ public class QLearning
                 }
 
                 float oldQ = GetQuality(currentState, nextState);
-                float newQ = ((1 - learningRate) * oldQ) + (learningRate * (rewards[nextState.TileType] + (discountFactor * maxQ)));
+
+                RewardState nextStateReward = GetReward(nextState);
+                float newQ = ((1 - learningRate) * oldQ) + (learningRate * (rewards[nextStateReward] + (discountFactor * maxQ)));
 
                 SetQuality(currentState, nextState, newQ);
                 currentState = nextState;
                 //LogQMatrix(i);
 
-                if (currentState.TileType == TileType.END)
+                if (nextStateReward != RewardState.NONE)
                 {
                     isEndState = true;
                 }
+                //if (currentState.Tile == TileType.END)
+                //{
+                //    isEndState = true;
+                //}
             }
             LogQMatrix(i);
         }
@@ -113,7 +119,12 @@ public class QLearning
             state = newState;
 
             Debug.Log(path);
-            isEnd = state.TileType == TileType.END;
+            RewardState nextStateReward = GetReward(state);
+            if (nextStateReward != RewardState.NONE)
+            {
+                isEnd = true;
+            }
+            //isEnd = state.TileType == TileType.END;
         }
 
         return path;
@@ -164,6 +175,12 @@ public class QLearning
         qMatrix[stateIndex, actionIndex] = value;
     }
 
+    RewardState GetReward(Node state)
+    {
+
+        return RewardState.NONE;
+    }
+
     Coord GetAction(Node state, Node toState)
     {
         Coord tileCoord = toState.Coord;
@@ -192,19 +209,27 @@ public class QLearning
 
     Node GetStateFromAction(Node state, Coord action)
     {
+        foreach (Node neighbour in state.Neighbours)
+        {
+            if (neighbour.Coord == action)
+            {
+                return neighbour;
+            }
+        }
+        return null;
 
-        //Coord dir = ActionToDirection(action);
-        //foreach (Node neighbour in state.Neighbours)
-        //{
-        //    int r = neighbour.Coord.row - state.Coord.row;
-        //    int c = neighbour.Coord.col - state.Coord.col;
+            //Coord dir = ActionToDirection(action);
+            //foreach (Node neighbour in state.Neighbours)
+            //{
+            //    int r = neighbour.Coord.row - state.Coord.row;
+            //    int c = neighbour.Coord.col - state.Coord.col;
 
-        //    if (dir.col == c && dir.row == r)
-        //    {
-        //        return neighbour;
-        //    }
-        //}
-        //return null;
+            //    if (dir.col == c && dir.row == r)
+            //    {
+            //        return neighbour;
+            //    }
+            //}
+            //return null;
     }
 
     //Coord ActionToDirection(char action)
